@@ -17,7 +17,7 @@ sub _initialize {
     my %arg_for = %$arg_for;
 
 
-    foreach my $attr ( qw/last_name first_name/ ) {
+    foreach my $attr ( qw/last_name first_name team/ ) {
         unless ( $arg_for{$attr} ) {
             croak "$attr cannot be blank";
         }
@@ -29,6 +29,12 @@ sub _initialize {
     }
     $self->{jersey} = $jersey;
 
+    if ( $arg_for{position} ) {
+        my $position = delete $arg_for{position};
+        croak "Invalid position" unless $position =~ /g|f/i;
+        $self->{position} = $position;
+    }
+
     foreach my $extra_attr ( keys %arg_for ) {
         croak "Invalid attribute '$extra_attr'";
     }
@@ -36,5 +42,6 @@ sub _initialize {
 
 sub jersey { $_[0]->{jersey} }
 sub name { $_[0]->{first_name} }
+sub position { $_[0]->{position} || 'Unknown' }
 
 1;
