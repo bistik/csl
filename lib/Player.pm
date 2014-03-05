@@ -34,4 +34,7 @@ sub _initialize {
     }
 }
 
+sub jersey { $_[0]->{jersey} }
+sub name { $_[0]->{first_name} }
+
 1;
