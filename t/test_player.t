@@ -139,8 +139,6 @@ $player = Player->new({
 can_ok 'Player', 'position';
 is $player->position, 'Unknown', 'Player position should be unknown if position is not set via new';
 
-TODO: {
-local $TODO = 'Player knows its team';
 $player = Player->new({
                 first_name => 'Michael',
                 last_name => 'Jordan',
@@ -148,6 +146,5 @@ $player = Player->new({
                 team => 'Bulls',
             });
 can_ok 'Player', 'team';
-}
 
 done_testing;

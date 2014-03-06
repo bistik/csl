@@ -43,5 +43,6 @@ sub _initialize {
 sub jersey { $_[0]->{jersey} }
 sub name { $_[0]->{first_name} }
 sub position { $_[0]->{position} || 'Unknown' }
+sub team { $_[0]->{team} }
 
 1;
