@@ -12,11 +12,11 @@ my $game_player = Player::GamePlayer->new({
     first_name => 'Alvin',
     last_name  => 'Patrimonio',
     jersey     => '16',
+    team       => 'Hotdogs',
 });
 
 isa_ok $game_player, 'Player::GamePlayer';
 isa_ok $game_player, 'Player'; # base class check
-isa_ok $game_player, 'UNIVERSAL'; # ancestor class check
 
 TODO: {
     local $TODO = 'GamePlayer knows how many points it scores in a game';
