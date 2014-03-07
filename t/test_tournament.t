@@ -6,6 +6,7 @@ use Test::Exception;
 
 use lib 'lib';
 use Tournament ':ALL';
+use Player::GamePlayer ':ALL';
 
 my $tournament = Tournament->new(
         { teams => [ "Misfits", "TteamO", "Cyberstars", "Cybergilas" ] }
@@ -25,7 +26,55 @@ is 1, $tournament->team_exists('Misfits'),
 is 0, $tournament->team_exists('Bulls'),
     'tournament->team_exist should return false for non-participating teams' ;
 
+can_ok 'Tournament', 'add_player';
+
+my $game_player = Player::GamePlayer->new({
+    first_name => 'Alvin',
+    last_name  => 'Patrimonio',
+    jersey     => '16',
+    team       => 'Misfits',
+});
+
+my $duplicate_player = Player::GamePlayer->new({
+    first_name => 'Sonny',
+    last_name  => 'Jaworski',
+    jersey     => '16', # same jersey as Alvin
+    team       => 'Misfits', # same team as Alvin
+});
+
+my $alien_game_player = Player::GamePlayer->new({
+    first_name => 'Alvin',
+    last_name  => 'Patrimonio',
+    jersey     => '16',
+    team       => 'Hotdogs', # Hotdogs is not in the tournament
+});
+
+my $not_a_game_player = 1;
+
+throws_ok { $tournament->add_player }
+        qr/Missing player argument for add_player/,
+        'tournament->add_player throws exception if there is no player
+        argument';
+throws_ok { $tournament->add_player($not_a_game_player) }
+       qr/Argument for add_player must be of type Player::GamePlayer/,
+       'tournament->add_player throws exception if arg is not a GamePlayer';
+
+
 TODO: {
+    local $TODO = 'add_player should throw exception if players team is not in
+    the tournament';
+    throws_ok { $tournament->add_player($alien_game_player) }
+        qr/Players team is not competing in this tournament/,
+        'tournament->add_player throws exception if players team is not in the
+        tournement';
+
+    local $TODO = 'add_player should throw an exception if player already
+    exists';
+    throws_ok { $tournament->add_player($duplicate_player) }
+        qr/Player has already been added before, stop messing up with our
+        records/,
+        'tournament->add_player throws exception if player already exists';
+
     local $TODO = 'Tournament can show info on team (schedule,players+stats,win,loss)';
     can_ok 'Tournament', 'team_info';
 }
