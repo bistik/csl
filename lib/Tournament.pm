@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Carp 'croak';
+use Try::Tiny;
 
 sub new {
     my ($class, $arg_for) = @_;
@@ -31,6 +32,23 @@ sub team_exists {
     my ($self, $team) = @_;
     my @tournament_teams = @{ $self->teams };
     return grep { $_ eq $team } @tournament_teams;
+}
+
+sub add_player {
+    my ($self, $player) = @_;
+    
+    unless ($player) {
+        croak "Missing player argument for add_player";
+    }
+    try {
+        unless ($player->isa('Player::GamePlayer')) {
+            croak "Argument for add_player must be of type Player::GamePlayer";
+        }
+    } catch {
+        croak "Argument for add_player must be of type Player::GamePlayer $!";
+    };
+
+    push @{ $self->{players} }, $player;
 }
 
 1;
