@@ -17,6 +17,7 @@ my $game_player = Player::GamePlayer->new({
 
 isa_ok $game_player, 'Player::GamePlayer';
 isa_ok $game_player, 'Player'; # base class check
+can_ok $game_player, 'team';
 
 TODO: {
     local $TODO = 'GamePlayer knows how many points it scores in a game';
@@ -33,9 +34,6 @@ TODO: {
 
     local $TODO = 'GamePlayer knows how many games it has played';
     can_ok $game_player, 'games_played';
-
-    local $TODO = 'GamePlayer knows which team it plays for';
-    can_ok $game_player, 'team';
 }
 
 done_testing;
