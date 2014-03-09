@@ -34,6 +34,22 @@ sub team_exists {
     return grep { $_ eq $team } @tournament_teams;
 }
 
+sub player_exists {
+    my ($self, $new_player) = @_;
+
+    my @candidates;
+
+    # same player: same team, same jersey number
+    foreach my $player ( @{ $self->{players} } ) {
+        if ( $player->team eq $new_player->team  and 
+            $player->jersey eq $new_player->jersey ) {
+            return 1;
+        }
+    }
+    
+    return 0;
+}
+
 sub add_player {
     my ($self, $player) = @_;
     
@@ -48,7 +64,14 @@ sub add_player {
         croak "Argument for add_player must be of type Player::GamePlayer $!";
     };
 
-    push @{ $self->{players} }, $player;
+    unless ($self->team_exists( $player->team )) {
+        croak $player->team . " team is not competing in this tournament\n";
+    }
+
+    if ($self->player_exists($player)) {
+        croak $player->name . " is already registered";
+    }
+    return push @{ $self->{players} }, $player;
 }
 
 1;

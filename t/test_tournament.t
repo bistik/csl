@@ -59,21 +59,27 @@ throws_ok { $tournament->add_player($not_a_game_player) }
        qr/Argument for add_player must be of type Player::GamePlayer/,
        'tournament->add_player throws exception if arg is not a GamePlayer';
 
+can_ok 'Tournament', 'player_exists';
 
+is $tournament->add_player($game_player), 1, 'each add_player call should increase
+player count by 1';
+is $tournament->player_exists($duplicate_player), 1, 'player_exists returns
+true for duplicate players';
+throws_ok { $tournament->add_player($duplicate_player) }
+    qr/is already registered/,
+    'tournament->add_player throws exception if player already exists';
+
+throws_ok { $tournament->add_player($alien_game_player) }
+    qr/team is not competing in this tournament/,
+    'tournament->add_player throws exception if players team is not in the
+    tournement';
 TODO: {
     local $TODO = 'add_player should throw exception if players team is not in
     the tournament';
-    throws_ok { $tournament->add_player($alien_game_player) }
-        qr/Players team is not competing in this tournament/,
-        'tournament->add_player throws exception if players team is not in the
-        tournement';
+
 
     local $TODO = 'add_player should throw an exception if player already
     exists';
-    throws_ok { $tournament->add_player($duplicate_player) }
-        qr/Player has already been added before, stop messing up with our
-        records/,
-        'tournament->add_player throws exception if player already exists';
 
     local $TODO = 'Tournament can show info on team (schedule,players+stats,win,loss)';
     can_ok 'Tournament', 'team_info';
