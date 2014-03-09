@@ -73,14 +73,8 @@ throws_ok { $tournament->add_player($alien_game_player) }
     qr/team is not competing in this tournament/,
     'tournament->add_player throws exception if players team is not in the
     tournement';
+
 TODO: {
-    local $TODO = 'add_player should throw exception if players team is not in
-    the tournament';
-
-
-    local $TODO = 'add_player should throw an exception if player already
-    exists';
-
     local $TODO = 'Tournament can show info on team (schedule,players+stats,win,loss)';
     can_ok 'Tournament', 'team_info';
 }
