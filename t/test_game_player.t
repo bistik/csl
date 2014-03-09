@@ -26,14 +26,23 @@ TODO: {
     local $TODO = 'We can set a GamePlayer\'s points scored in a game';
     can_ok $game_player, 'add_score_for';
 
-    local $TODO = 'GamePlayer knows how many points it has scored in the tournament';
+    local $TODO = 'GamePlayer knows how many points it scored in a tournament';
     can_ok $game_player, 'total_score';
 
     local $TODO = 'GamePlayer knows its average points per game';
-    can_ok $game_player, 'average';
+    can_ok $game_player, 'average_points';
 
     local $TODO = 'GamePlayer knows how many games it has played';
     can_ok $game_player, 'games_played';
+
+    local $TODO = 'GamePlayer knows how many fouls it made in a game';
+    can_ok $game_player, 'fouls_for';
+
+    local $TODO = 'GamePlayer knows how many fouls it made in a tournament';
+    can_ok $game_player, 'total_fouls';
+
+    local $TODO = 'GamePlayer knows its average fouls per game';
+    can_ok $game_player, 'average_fouls';
 }
 
 done_testing;
