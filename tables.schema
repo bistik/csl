@@ -1,0 +1,27 @@
+Player
+ - player_id
+ - nickname
+ - first_name
+ - last_name
+ - jersey
+
+Team
+ - team_id
+ - name
+ - color
+ - win
+ - loss
+
+Game
+ - game_id
+ - team1 (team_id)
+ - team2 (team_id)
+ - date
+ - winner (team_id)
+
+Boxscore
+ - player_id
+ - game_id
+ - team_id
+ - points
+ - fouls
