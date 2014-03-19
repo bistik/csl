@@ -15,4 +15,6 @@ throws_ok { my $loader = Player::CSVLoader->new({file=>''}) }
     qr/Missing file/,
     'CSVLoader must have a file attribute';
 
+can_ok 'Player::CSVLoader', 'get_players';     # all players
+can_ok 'Player::CSVLoader', 'get_players_for'; # players on a team
 done_testing;
