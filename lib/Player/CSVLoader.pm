@@ -4,6 +4,10 @@ use strict;
 use warnings;
 
 use Carp 'croak';
+use Text::CSV;
+
+use lib 'lib';
+use Player::GamePlayer;
 
 sub new {
     my ($class, $arg_for) = @_;
@@ -29,6 +33,17 @@ sub _initialize {
 
 sub _load_csv {
     my $self = shift;
+    open my $fh, '<', $self->{file} or die "Error reading $self->{file} : $!";
+    my $header = <$fh>;
+    
+    my $csv = Text::CSV->new({
+        binary    => 1,
+        auto_diag => 1,
+    });
 
+    while (my $row = $csv->getline($fh)) {
+        print "@$row\n";
+    }
 }
+
 1;
