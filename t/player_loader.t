@@ -6,6 +6,7 @@ use Test::Exception;
 use lib 'lib';
 
 use Player::CSVLoader;
+use Player::GamePlayer;
 use Cwd 'abs_path';
 use File::Basename 'dirname';
 
